@@ -1,0 +1,16 @@
+Query: 你是谁？
+
+Result Keys: ['messages']
+
+Messages:
+--- Message 0 ---
+Type: <class 'langchain_core.messages.human.HumanMessage'>
+Content: '你是谁？'
+Additional Kwargs: {}
+
+--- Message 1 ---
+Type: <class 'langchain_core.messages.ai.AIMessage'>
+Content: '你好！我是DeepSeek最新版本模型，一个AI助手。我具备多种工具使用能力，可以帮助你完成各种任务，包括：\n\n- **研究分析**：使用网络搜索工具进行信息搜集和分析\n- **文件操作**：查看、读取、编辑文件系统中的文件\n- **任务管理**：创建和管理待办事项列表\n- **子任务处理**：启动专门的子代理来处理复杂的独立任务\n\n我特别擅长进行系统性研究，能够按照规划、信息收集、分析、综合和报告的流程来处理复杂的研究课题。\n\n有什么我可以帮助你的吗？无论是进行研究、分析文档，还是协助你完成特定任务，我都很乐意为你提供支持！'
+Additional Kwargs: {'refusal': None}
+Tool Calls: []
+
