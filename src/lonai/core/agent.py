@@ -60,13 +60,30 @@ class ResearchAgent:
         # Create agent
         system_prompt = self.prompt_manager.get_research_prompt(custom_instructions)
         
+        # Get skills directory if configured
+        # FilesystemBackend uses relative paths (no leading slash)
+        # Other backends like StateBackend use POSIX paths ("/skills/")
+        skills_dirs = ["skills"] if self.settings.skills_dir and self.settings.skills_dir.exists() else []
+        
+        # Configure Backend with execution support
+        from lonai.core.backend import LocalExecutionBackend
+        from pathlib import Path
+        
+        # Use project root as the filesystem root
+        project_root = Path(__file__).parent.parent.parent.parent
+        
         self.agent = create_deep_agent(
             model=model,
             tools=[self.search_tool.get_function_definition()],
             system_prompt=system_prompt,
+            skills=skills_dirs,
+            backend=LocalExecutionBackend(root_dir=str(project_root)),
+            debug=False,  # Enable debug logging
         )
         
-        logger.info(f"ResearchAgent initialized with provider: {self.settings.agent_provider}")
+        logger.info(f"ResearchAgent initialized with provider: {self.settings.agent_provider}, skills_dir: {skills_dirs}")
+
+
 
     def _configure_model(self) -> Any:
         """Configure the LLM based on settings."""

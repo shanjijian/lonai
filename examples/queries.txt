@@ -1,7 +1,0 @@
-# Example research queries for batch processing
-
-What is quantum computing?
-Latest developments in artificial intelligence
-Climate change impacts on global economy
-Blockchain technology applications
-Renewable energy trends in 2026

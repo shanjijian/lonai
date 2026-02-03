@@ -133,16 +133,27 @@ class Settings(BaseSettings):
         # However, checking 'values' in pydantic v2 requires `info.data`.
         return v
     
-    @field_validator("storage_data_dir", "export_output_dir", "log_file")
+    @field_validator("storage_data_dir", "export_output_dir", "log_file", "skills_dir")
     @classmethod
     def ensure_path_exists(cls, v: Path) -> Path:
         """Ensure path parent directories exist."""
+        if v is None:
+            return v
         if not v.is_absolute():
             # Make relative to project root
             from lonai.config.constants import PROJECT_ROOT
             v = PROJECT_ROOT / v
-        v.parent.mkdir(parents=True, exist_ok=True)
+        # Don't create parent for skills_dir, just resolve it
+        if v.name != "skills":
+            v.parent.mkdir(parents=True, exist_ok=True)
         return v
+    
+    # Skills Configuration
+    skills_dir: Optional[Path] = Field(
+        default=Path("skills"),
+        description="Directory containing SKILL.md files"
+    )
+
     
     @classmethod
     def from_yaml(cls, config_path: Optional[Path] = None) -> "Settings":
@@ -169,6 +180,8 @@ class Settings(BaseSettings):
                         for key, value in values.items():
                             config_key = f"{section}_{key}"
                             config_data[config_key] = value
+                    else:
+                        config_data[section] = values
         
         # Merge with environment variables (env vars take precedence)
         return cls(**config_data)

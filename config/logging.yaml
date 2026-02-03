@@ -29,6 +29,26 @@ loggers:
     handlers: [console, file]
     propagate: false
 
+  httpx:
+    level: WARNING
+    handlers: [console, file]
+    propagate: false
+
+  httpcore:
+    level: WARNING
+    handlers: [console, file]
+    propagate: false
+    
+  urllib3:
+    level: WARNING
+    handlers: [console, file]
+    propagate: false
+
+  openai:
+    level: WARNING
+    handlers: [console, file]
+    propagate: false
+
 root:
   level: INFO
   handlers: [console, file]

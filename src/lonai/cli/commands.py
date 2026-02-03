@@ -82,6 +82,12 @@ def research(
         # Initialize agent
         formatter.print_header("Research Assistant")
         formatter.print_info(f"Query: {query}")
+        
+        # Auto-detect Chinese if not explicitly set
+        if lang == "en" and any('\u4e00' <= char <= '\u9fff' for char in query):
+            lang = "zh"
+            formatter.print_info("Auto-detected language: zh (Chinese)")
+        
         formatter.print_info(f"Language: {lang}")
         
         with formatter.create_progress() as progress:
